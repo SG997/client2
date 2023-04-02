@@ -8,9 +8,16 @@ import 'package:unimastery_mobile/presentation/ui/home/view/home_featured_classe
 import 'package:unimastery_mobile/presentation/ui/home/view/home_my_academies.dart';
 import 'package:unimastery_mobile/presentation/ui/home/view/home_my_classes.dart';
 import 'package:unimastery_mobile/presentation/ui/home/view/home_recommended_academies.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({Key? key}) : super(key: key);
+
+  goCreateAcademy() async {
+    const url = 'https://web-creation-academy.vercel.app/';
+    final uri = Uri.parse(url);
+    await launchUrl(uri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,7 @@ class HomeBody extends StatelessWidget {
               height: 48,
               child: PrimaryButton(
                 title: "Want to create an academy?",
-                onTap: () {},
+                onTap: () { goCreateAcademy(); },
               ),
             ),
           ),
