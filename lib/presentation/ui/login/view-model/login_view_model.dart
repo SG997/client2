@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:retrofit/http.dart';
 import 'package:unimastery_mobile/presentation/router/navigation.dart';
+
+import '../../../../data/rest_api.dart';
+import 'dart:developer';
 
 abstract class LoginViewModel extends ChangeNotifier {
   bool isLoading = false;
@@ -51,11 +56,19 @@ class LoginViewModelImpl extends LoginViewModel {
       return;
     }
 
-    await Future.delayed(const Duration(seconds: 1));
+    RestClient.getApi(isAuth: false).sendOtp('+972' + phoneNumber).then((value) => {
+      setLoading(false),
+      Navigation.push(RouteName.otp, arguments: '+972' + phoneNumber)
+    }).catchError((onError) => {
+      // TODO handle error
+      log('data: onError'),
+      setLoading(false)
 
-    Navigation.push(RouteName.otp);
+    });
 
-    setLoading(false);
+
+    //await Future.delayed(const Duration(seconds: 1));
+
   }
 
   listenKeyboardVisibility() {

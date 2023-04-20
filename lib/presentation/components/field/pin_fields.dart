@@ -15,7 +15,7 @@ class PinFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PinFieldAutoFill(
-      codeLength: 4,
+      codeLength: 6,
       autoFocus: true,
       onCodeChanged: onPinChanged,
       onCodeSubmitted: onPinSubmitted,

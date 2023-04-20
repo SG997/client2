@@ -62,10 +62,11 @@ class RouteGenerator {
         );
 
       case RouteName.otp:
+        final phoneNumber = args as String;
         return push(
           ChangeNotifierProvider<OtpViewModel>(
             create: (context) => locator.get<OtpViewModel>(),
-            child: const OtpPage(),
+            child: OtpPage(phoneNumber: phoneNumber),
           ),
         );
 

@@ -9,7 +9,8 @@ part 'back_and_next_button.dart';
 part 'otp_body.dart';
 
 class OtpPage extends StatelessWidget {
-  const OtpPage({Key? key}) : super(key: key);
+  final String phoneNumber;
+  OtpPage({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class OtpPage extends StatelessWidget {
           icon: const Icon(Icons.close),
         ),
       ),
-      body: const OtpBody(),
+      body: OtpBody(phoneNumber: this.phoneNumber,),
     );
   }
 }

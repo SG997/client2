@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:unimastery_mobile/app/generic/generic_state.dart';
+import 'package:unimastery_mobile/data/data-model/completeRegistration/complete_registration.dart';
 import 'package:unimastery_mobile/presentation/router/navigation.dart';
 import 'package:unimastery_mobile/presentation/ui/user-detail-input/model/user_interests_model.dart';
 import 'package:unimastery_mobile/presentation/util/datetime_ext.dart';
 import 'package:unimastery_mobile/presentation/util/stringx.dart';
+
+import '../../../../data/rest_api.dart';
 
 abstract class UserDetailInputCubit extends Cubit<GenericState> {
   UserDetailInputCubit() : super(Initial());
@@ -62,6 +65,8 @@ class UserDetailInputCubitImpl extends UserDetailInputCubit {
   final TextEditingController pLastNameTextController;
   final TextEditingController pBirthdayTextController;
   final TextEditingController pEmailTextController;
+
+  int timestamp = -1;
 
   UserDetailInputCubitImpl({
     required this.pFirstNameTextController,
@@ -132,6 +137,10 @@ class UserDetailInputCubitImpl extends UserDetailInputCubit {
   void setBirthday(DateTime? value) {
     if (value == null) return;
 
+    //double timestamp1 = ((value.millisecondsSinceEpoch/1000) as double).toInt();
+
+    timestamp = value.millisecondsSinceEpoch;
+
     birthdayController.add(value);
     pBirthdayTextController.text = value.formattedDate;
   }
@@ -172,8 +181,14 @@ class UserDetailInputCubitImpl extends UserDetailInputCubit {
 
   @override
   void submitStepThree() {
-    emit(Initial());
-    Navigation.popToRootAndPushNamed(RouteName.root);
+
+    RestClient.getApi(isAuth: true).completeRegistrationAfterOTP(new CompleteRegistration(firstNameController.value!, lastNameController.value!, 'phoneNumber', '', timestamp)).then((value) => {
+      emit(Initial()),
+      Navigation.popToRootAndPushNamed(RouteName.root),
+    }).catchError((onError) => {
+
+    });
+
   }
 
   @override

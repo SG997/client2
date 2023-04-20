@@ -1,11 +1,13 @@
 part of 'otp_page.dart';
 
 class OtpBody extends StatelessWidget {
-  const OtpBody({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const OtpBody({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final otpViewModel = context.read<OtpViewModel>();
+    otpViewModel.setPhoneNumber(phoneNumber);
 
     return Stack(
       children: [
