@@ -8,6 +8,7 @@ import 'package:unimastery_mobile/presentation/router/navigation.dart';
 import '../../../../data/data-model/authenticate/authenticate.dart';
 import '../../../../data/data-model/user/user-entity.dart';
 import '../../../../data/rest_api.dart';
+import '../../../../data/share_prefrences/shared_prefrences.dart';
 
 abstract class OtpViewModel extends ChangeNotifier {
   bool? isNextButtonActive;
@@ -65,6 +66,8 @@ class OtpViewModelImpl extends OtpViewModel {
   }
 
   populate(AuthenticateVM authenticate) {
+    SharedPrefrences.saveToken(authenticate.token);
+
     Cache.user = authenticate.user;
     Cache.token = authenticate.token;
   }

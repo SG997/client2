@@ -40,5 +40,10 @@ abstract class RestClient {
   @POST("api/user/user/completeRegistrationAfterOTP")
   Future<UserEntity> completeRegistrationAfterOTP(@Body() CompleteRegistration completeRegistration);
 
+  @GET("api/user/aggregator/getHome")
+  Future<void> getHome();
+
+
+
 
 }
